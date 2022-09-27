@@ -5,6 +5,9 @@
  * 1. Introduction to Java helpful.
  */
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public abstract class Bag {
     /*
      * TODO: Create the following private instance variables
@@ -13,7 +16,10 @@ public abstract class Bag {
      *       - an int named capacity
      *       - an array of Strings named contents
      */
-
+    private String color;
+    private int numberOfContents;
+    private int capacity;
+    private String[] contents;
 
 
 
@@ -26,8 +32,12 @@ public abstract class Bag {
      * be empty (e.g. numberOfContents is 0 and an empty String array for
      * its contents.)
      */
-
-
+    public Bag(String colour, int capacity){
+        this.color = colour;
+        this.capacity = capacity;
+        this.numberOfContents = 0;
+        this.contents = new String[]{};
+    }
 
 
     /*
@@ -37,15 +47,26 @@ public abstract class Bag {
      *           - getNumberOfContents
      *           - getCapacity
      */
+    public String getColor(){
+        return this.color;
+    }
 
+    public int getNumberOfContents(){
+        return this.numberOfContents;
+    }
 
+    public int getCapacity(){
+        return this.capacity;
+    }
 
 
     /*
      * TODO: Create a setter function called setColor which sets the
      *       color of this bag to the given color.
      */
-
+    public void setColor(String newColor){
+        this.color = newColor;
+    }
 
 
 
@@ -60,8 +81,15 @@ public abstract class Bag {
      *       This method should return true if the item was added
      *       and false otherwise.
      */
-
-
+    public Boolean addItem(String item){
+        if (this.numberOfContents < this.capacity){
+            this.contents = Arrays.copyOf(this.contents, this.numberOfContents + 1);
+            this.contents[this.numberOfContents] = item;
+            this.numberOfContents += 1;
+            return true;
+        }
+        return false;
+    }
 
 
 
@@ -75,7 +103,16 @@ public abstract class Bag {
      *
      * @return
      */
-
+    public String popItem(){
+        if (getNumberOfContents() == 0){
+            return null;
+        } else {
+            String item = this.contents[this.contents.length - 1];
+            this.contents = Arrays.copyOf(this.contents, this.contents.length - 1);
+            this.numberOfContents--;
+            return item;
+        }
+    }
 
 
 
@@ -87,7 +124,7 @@ public abstract class Bag {
      */
     public void increaseCapacity(int n) {
         // TODO: Implement this method.
-
+        this.capacity += n;
     }
 
     /**
